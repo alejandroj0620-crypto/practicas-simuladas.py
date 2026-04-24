@@ -55,3 +55,41 @@ class Cliente(Entidad):
 
 
 # ============= SERVICIO ABSTRACTO ============
+class Servicio(Entidad):
+    def _init_(self, id, nombre, tarifa_base):
+        super()._init_(id)
+
+        if not nombre:
+            raise ServicioError("Nombre de servicio inválido")
+        if tarifa_base <= 0:
+            raise ServicioError("Tarifa base inválida")
+
+        self._nombre = nombre
+        self._tarifa_base = tarifa_base
+
+    def mostrar(self):
+        return f"Servicio: {self._nombre} - Tarifa: {self._tarifa_base}"
+
+    # --------- MÉTODO PARA CALCULAR TIEMPO ---------
+    def convertir_a_horas(self, cantidad, unidad):
+        try:
+            if cantidad <= 0:
+                raise ServicioError("Cantidad inválida")
+
+            if unidad == "horas":
+                return cantidad
+            elif unidad == "dias":
+                return cantidad * 24
+            elif unidad == "semanas":
+                return cantidad * 24 * 7
+            else:
+                raise ServicioError("Unidad de tiempo no válida")
+
+        except Exception as e:
+            Logger.log(f"Error al convertir tiempo: {str(e)}")
+            raise ServicioError("Error en conversión de tiempo") from e
+
+    # --------- MÉTODO ABSTRACTO ---------
+    @abstractmethod
+    def calcular_costo(self, cantidad, unidad):
+        pass
