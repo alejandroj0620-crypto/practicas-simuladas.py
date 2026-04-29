@@ -69,8 +69,7 @@ class Servicio(Entidad):
 
     def mostrar(self):
         return f"Servicio: {self._nombre} - Tarifa: {self._tarifa_base}"
-
-    # --------- MÉTODO PARA CALCULAR TIEMPO ---------
+        
     def convertir_a_horas(self, cantidad, unidad):
         try:
             if cantidad <= 0:
@@ -93,3 +92,20 @@ class Servicio(Entidad):
     @abstractmethod
     def calcular_costo(self, cantidad, unidad):
         pass
+# ================== SERVICIOS ==================
+class ReservaSala(Servicio):
+    def calcular_costo(self, cantidad, tipo):
+        horas = self.convertir_tiempo(cantidad, tipo)
+        return self.precio_base * horas
+
+
+class AlquilerEquipo(Servicio):
+    def calcular_costo(self, cantidad, tipo):
+        horas = self.convertir_tiempo(cantidad, tipo)
+        return self.precio_base * horas * 0.8
+
+
+class Asesoria(Servicio):
+    def calcular_costo(self, cantidad, tipo):
+        horas = self.convertir_tiempo(cantidad, tipo)
+        return self.precio_base * horas * 1.2
