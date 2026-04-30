@@ -184,3 +184,41 @@ class Sistema:
 
     def crear_reserva(self, reserva):
         self.reservas.append(reserva)
+        
+# ================== INTERFAZ ==================
+class App:
+    def __init__(self, root):
+        self.sistema = Sistema()
+        self.root = root
+        self.root.title("Software FJ")
+
+        # ===== CLIENTE =====
+        tk.Label(root, text="Nombre").grid(row=0, column=0)
+        self.nombre = tk.Entry(root)
+        self.nombre.grid(row=0, column=1)
+
+        tk.Label(root, text="Email").grid(row=1, column=0)
+        self.email = tk.Entry(root)
+        self.email.grid(row=1, column=1)
+
+        tk.Button(root, text="Agregar Cliente", command=self.agregar_cliente).grid(row=2, column=1)
+
+        # ===== SERVICIO =====
+        tk.Label(root, text="Servicio").grid(row=3, column=0)
+        self.tipo_servicio = tk.StringVar()
+        self.tipo_servicio.set("Sala")
+
+        tk.OptionMenu(root, self.tipo_servicio, "Sala", "Equipo", "Asesoria").grid(row=3, column=1)
+
+        # ===== TIEMPO =====
+        tk.Label(root, text="Cantidad").grid(row=4, column=0)
+        self.tiempo = tk.Entry(root)
+        self.tiempo.grid(row=4, column=1)
+
+        tk.Label(root, text="Unidad").grid(row=5, column=0)
+        self.tipo_tiempo = tk.StringVar()
+        self.tipo_tiempo.set("Horas")
+
+        tk.OptionMenu(root, self.tipo_tiempo, "Horas", "Días", "Semanas").grid(row=5, column=1)
+
+        tk.Button(root, text="Crear Reserva", command=self.crear_reserva).grid(row=6, column=1)
